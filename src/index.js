@@ -1,26 +1,39 @@
-// Test import of a JavaScript module
-import { example } from '@/js/example'
+import {fabric} from 'fabric';
 
-// Test import of an asset
-import webpackLogo from '@/images/webpack-logo.svg'
+const canvas = new fabric.Canvas('myCanvas');
 
-// Test import of styles
-import '@/styles/index.scss'
+const circle = new fabric.Circle({
+  radius: 40, 
+  fill: 'blue', 
+  originX: 'center',
+  originY: 'center'
+});
+const text = new fabric.Text('Миша', {
+  fontSize: 30,
+  originX: 'center',
+  originY: 'center'
+});
+const group = new fabric.Group([ circle, text ], {
+  left: 210, 
+  top: 160,
+  angle: 0
+});
 
-// Appending to the DOM
-const logo = document.createElement('img')
-logo.src = webpackLogo
+canvas.add(group);
+// circle.set('fill', 'red');
+// console.log(canvas.getObjects());
+// canvas.on('mouse:down', function(options) {
+//   console.log(options.e.clientX, options.e.clientY);
+//   if (options.target) {
+//     console.log('an object was clicked! ', options.target.type);
+//   }
+// });
+console.log(group.item(0));
 
-const heading = document.createElement('h1')
-heading.textContent = example()
+group.item(0).set('fill', 'red');
+group.item(1).set({
+  text: 'trololo',
+  fill: 'white'
+});
 
-// Test a background image url in CSS
-const imageBackground = document.createElement('div')
-imageBackground.classList.add('image')
-
-// Test a public folder asset
-const imagePublic = document.createElement('img')
-imagePublic.src = '/assets/example.png'
-
-const app = document.querySelector('#root')
-app.append(logo, heading, imageBackground, imagePublic)
+canvas.renderAll();
