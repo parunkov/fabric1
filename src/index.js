@@ -1,4 +1,5 @@
 import {fabric} from 'fabric';
+console.log('fabric - ', fabric);
 
 const canvas = new fabric.Canvas('myCanvas');
 
