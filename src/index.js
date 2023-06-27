@@ -46,28 +46,44 @@ const line = new fabric.Line([250, 200, 450, 300], {
   originX: 'center',
   originY: 'center'
 });
-console.log(line.getCenterPoint());
-// const text3 = new fabric.Text('25', {
-//   fontSize: 30,
-//   originX: 'center',
-//   originY: 'center'
-// });
-// const group3 = new fabric.Group([ line, text3 ], {
-//   left: 250, 
-//   top: 200,
-//   selectable: false,
-//   hoverCursor: 'pointer'
-// });
+// console.log(line.intersectsWithObject(circle2));
+const text3 = new fabric.Text('25', {
+  left: line.getCenterPoint().x,
+  top: line.getCenterPoint().y,
+  fontSize: 30,
+  originX: 'center',
+  originY: 'center',
+  fill: 'red'
+});
+const triangle = new fabric.Triangle({
+  width: 20, 
+  height: 30, 
+  fill: 'black', 
+  left: 415, 
+  top: 283,
+  angle: 120,
+  originX: 'center',
+  originY: 'top',
+});
+const group3 = new fabric.Group([ line, text3, triangle ], {
+  selectable: false,
+  hoverCursor: 'pointer'
+});
 
+canvas.add(group3);
 canvas.add(group);
 canvas.add(group2);
-canvas.add(line)
 // circle.set('fill', 'red');
 // console.log(canvas.getObjects());
 canvas.on('mouse:down', function(options) {
   // console.log(options.e.clientX, options.e.clientY);
   if (options.target) {
-    console.log('Круг - ', options.target.item(1).text);
+    if (options.target.item(0).type === 'circle') {
+      console.log('Круг - ', options.target.item(1).text);
+    }
+    if (options.target.item(0).type === 'line') {
+      console.log('Линия - ', options.target.item(1).text);
+    }
   }
 });
 
@@ -116,3 +132,4 @@ canvas.on('mouse:up', function(opt) {
   this.isDragging = false;
   this.selection = true;
 });
+
